@@ -5,7 +5,8 @@ export async function POST(req: Request) {
   try {
     const { videoUrl } = await req.json();
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
 
     const result = await model.generateContent(`Analyze this video: ${videoUrl} and provide a social media post, Twitter thread, and Instagram script.`);
     const response = await result.response;
