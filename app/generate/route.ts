@@ -11,7 +11,11 @@ export async function POST(req: Request) {
     const result = await model.generateContent(`Analyze this video: ${videoUrl} and provide a social media post, Twitter thread, and Instagram script.`);
     const response = await result.response;
     return NextResponse.json({ text: response.text() });
-  } catch (error) {
+  } } catch (error: any) {
+  console.error("Detailed Error:", error); // Ye Vercel logs mein dikhega
+  return NextResponse.json({ text: `Technical Error: ${error.message}` }, { status: 500 });
+}
+
     return NextResponse.json({ text: "Error generating content. Please check your API key." }, { status: 500 });
   }
 }
