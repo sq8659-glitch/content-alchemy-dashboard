@@ -1,26 +1,36 @@
-"use client"
-
-import { useState } from "react"
-import { AuthScreen } from "@/components/auth-screen"
-import { Dashboard } from "@/components/dashboard"
-import { PricingModal } from "@/components/pricing-modal"
+"use client";
+import { useState } from 'react';
 
 export default function Page() {
-  const [userName, setUserName] = useState<string | null>(null)
-  const [showPlans, setShowPlans] = useState(false)
+  const [url, setUrl] = useState('');
+  const [result, setResult] = useState('');
 
-  if (!userName) {
-    return <AuthScreen onAuthenticated={(name) => setUserName(name)} />
-  }
+  const handleGenerate = async () => {
+    setResult("Generating...");
+    const response = await fetch('/api/generate', {
+      method: 'POST',
+      body: JSON.stringify({ videoUrl: url }),
+    });
+    const data = await response.json();
+    setResult(data.text);
+  };
 
   return (
-    <>
-      <Dashboard
-        userName={userName}
-        onViewPlans={() => setShowPlans(true)}
-        onSignOut={() => setUserName(null)}
+    <div className="p-8">
+      <h1 className="text-2xl font-bold">Content Alchemy</h1>
+      <input 
+        className="border p-2 mt-4 w-full"
+        placeholder="Paste YouTube Link Here"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
       />
-      {showPlans && <PricingModal onClose={() => setShowPlans(false)} />}
-    </>
-  )
+      <button 
+        className="bg-green-600 text-white p-2 mt-2 w-full"
+        onClick={handleGenerate}
+      >
+        Generate Assets
+      </button>
+      <div className="mt-4 p-4 border bg-gray-50">{result}</div>
+    </div>
+  );
 }
