@@ -7,7 +7,7 @@ export default function Page() {
 
   const handleGenerate = async () => {
     setResult("Generating...");
-    const response = await fetch('/api/generate', {
+    const response = await fetch('/generate', {
       method: 'POST',
       body: JSON.stringify({ videoUrl: url }),
     });
