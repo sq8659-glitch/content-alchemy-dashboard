@@ -13,6 +13,11 @@
     "react-dom": "latest",
     "stripe": "latest",
     "@stripe/stripe-js": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest"
   }
 }
-
